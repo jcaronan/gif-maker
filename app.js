@@ -3,65 +3,48 @@ var app = express();
 
 var bodyParser = require('body-parser');
 
-var gcloud = require('gcloud');
-
-var datastore = gcloud.datastore;
-var dataset = datastore.dataset({
+var gcloudConfig = {
   projectId: 'gif-maker-1204',
-  apiEndpoint: 'http://localhost:8080'
-});
-var gcs = gcloud.storage({
-  projectId: 'gif-maker-1204'
-});
+  keyFilename: 'gif-maker-256c5e36a0b8.json'
+};
+var gcloud = require('gcloud')(gcloudConfig);
 
-var album = gcs.bucket('gif-bucket');
+//cloud storage
+var gcs = gcloud.storage();
+var albums = gcs.bucket('albums');
 
-app.use(express.static(__dirname + '/view'));
+//cloud datastore
+var datastore = gcloud.datastore;
+
 //Store all HTML files in view folder.
+app.use(express.static(__dirname + '/view'));
 app.use(express.static(__dirname + '/script'));
-app.use(bodyParser.json()); // for parsing application/json
+
+// for parsing application/json
+app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({ extended: true })); 
 
 
 app.get('/',function(req,res){
-  res.sendFile('index.html');
   //It will find and locate index.html from view
+  res.sendFile('index.html');
 });
 
 app.post('/save', function (req, res) {
-	  console.log(req.body);
-	var key = dataset.key('Gif');
-  	dataset.save({
-    	key: key,
-    	data: req.body
- 	 }, function (err) {
-    	console.log("\n\n\n\nERROOOOOOOOR!!!!");
-    	console.log(err);
- 	 });
+  console.log("hjhsjhfkjsdf");
 
-    album.acl.add({
-      entity: 'allUsers',
-      role: gcs.acl.READER_ROLE
-    }, function(err, aclObject) {});
-
-    album.acl.default.add({
-      entity: 'allUsers',
-      role: gcs.acl.READER_ROLE
-    }, function(err, aclObject) {});
-
-    var options = {
-      destination: 'new-image.gif',
-      resumable: true
-    };
-
-    bucket.upload(req.body, options, function(err, file) {
-      console.log(err);
-    });
-
-  res.end();
 });
 
+if (module === require.main) {
+  // [START server]
+  // Start the server
+  var server = app.listen(process.env.PORT || 8080, function () {
+    var host = server.address().address;
+    var port = server.address().port;
 
-app.listen(3000);
+    console.log('App listening at http://%s:%s', host, port);
+  });
+  // [END server]
+}
 
-console.log("Running at Port 3000");
+module.exports = app;
