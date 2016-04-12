@@ -69,13 +69,50 @@
                       var img = document.getElementById("result");
                       img.src = URL.createObjectURL(blob);
 
+                      // console.log(blob);
+                      // var form = new FormData();
+                      // var request = new XMLHttpRequest();
+                      
+                      // form.append("image", blob, "gif-roulette.gif");
+                      // request.open("POST", "/upload", true);
+                      // request.send(form);
+
                       // var reader = new window.FileReader();
                       // reader.readAsDataURL(blob); 
                       // reader.onloadend = function() {
                       //     var base64data = base64data + reader.result;    
                       //     $.post("/save", {"data" : base64data});            
                       //   }
-                      $.post("/save", {"data" : img.src}); 
+                      console.log(blob);
+                        $.ajax({
+                                url: '/upload/storage/v1/b/myBucket/o?uploadType=multipart HTTP/1.1',
+                                type: 'post',
+                                dataType: 'json',
+                                success: function (data) {
+                                },
+                                data: person
+                            });
+                        }
+
+                        
+// Host: www.googleapis.com
+// Authorization: Bearer your_auth_token
+// Content-Type: multipart/related; boundary=foo_bar_baz
+// Content-Length: number_of_bytes_in_entire_request_body
+
+// --foo_bar_baz
+// Content-Type: application/json; charset=UTF-8
+
+// {
+//   "name": "myObject"
+// }
+
+// --foo_bar_baz
+// Content-Type: image/jpeg
+
+// JPEG data
+// --foo_bar_baz--
+//                       $.post("/upload", {"data" : img.src }); 
                     });
                     
                     

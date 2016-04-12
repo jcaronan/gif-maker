@@ -11,7 +11,7 @@ var gcloud = require('gcloud')(gcloudConfig);
 
 //cloud storage
 var gcs = gcloud.storage();
-var albums = gcs.bucket('albums');
+var bucket = gcs.bucket('gif-maker-1204.appspot.com');
 
 //cloud datastore
 var datastore = gcloud.datastore;
@@ -24,14 +24,23 @@ app.use(express.static(__dirname + '/script'));
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({ extended: true })); 
 
+app.use('/static', express.static('public'));
+
 
 app.get('/',function(req,res){
   //It will find and locate index.html from view
   res.sendFile('index.html');
 });
 
-app.post('/save', function (req, res) {
-  console.log("hjhsjhfkjsdf");
+app.post('/upload', function (req, res) {
+  console.log(req.body.data);
+
+bucket.upload(req.body.data, function(err, file, apiResponse) {
+  file.makePublic(function(err, apiResponse) {
+    console.log(apiResponse);
+  });
+  console.log(file.metadata.mediaLink);
+});
 
 });
 
