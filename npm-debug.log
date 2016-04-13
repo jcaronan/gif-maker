@@ -1,0 +1,34 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/bin/npm', 'start' ]
+2 info using npm@3.5.0
+3 info using node@v0.10.37
+4 verbose node symlink /usr/bin/node
+5 verbose stack Error: Failed to parse json
+5 verbose stack Unexpected end of input at 26:2
+5 verbose stack
+5 verbose stack ^
+5 verbose stack     at parseError (/usr/lib/node_modules/npm/node_modules/read-package-json/read-json.js:379:11)
+5 verbose stack     at parseJson (/usr/lib/node_modules/npm/node_modules/read-package-json/read-json.js:68:23)
+5 verbose stack     at /usr/lib/node_modules/npm/node_modules/read-package-json/read-json.js:48:5
+5 verbose stack     at /usr/lib/node_modules/npm/node_modules/graceful-fs/graceful-fs.js:76:16
+5 verbose stack     at fs.js:272:14
+5 verbose stack     at /usr/lib/node_modules/npm/node_modules/graceful-fs/graceful-fs.js:42:10
+5 verbose stack     at Object.oncomplete (fs.js:108:15)
+6 verbose cwd /home/jcaronan/workspace/gif-m
+7 error Linux 3.16.0-51-generic
+8 error argv "node" "/usr/bin/npm" "start"
+9 error node v0.10.37
+10 error npm  v3.5.0
+11 error file /home/jcaronan/workspace/gif-m/package.json
+12 error code EJSONPARSE
+13 error Failed to parse json
+13 error Unexpected end of input at 26:2
+13 error
+13 error ^
+14 error File: /home/jcaronan/workspace/gif-m/package.json
+15 error Failed to parse package.json data.
+15 error package.json must be actual JSON, not just JavaScript.
+15 error
+15 error This is not a bug in npm.
+15 error Tell the package author to fix their package.json file. JSON.parse
+16 verbose exit [ 1, true ]
